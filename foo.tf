@@ -29,7 +29,8 @@ module "dev" {
   source = "./modules/environment-factory"
 
   project_id          = "foo-dev-348219"
-  name                = "foo-dev"
+  name                = "foo"
+  environment         = "dev"
   gcp_billing_account = var.gcp_billing_account
   tfc_organization    = var.tfc_organization
 

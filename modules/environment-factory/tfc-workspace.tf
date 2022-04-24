@@ -9,8 +9,9 @@
 
 resource "tfe_workspace" "resources" {
   organization      = var.tfc_organization
-  name              = "${var.name}-resources"
+  name              = "${var.name}-${var.environment}-resources"
   terraform_version = "1.1.1" # must match template version
+  working_directory = "environments/${var.environment}"
 }
 
 #####################################################
@@ -28,7 +29,7 @@ resource "tfe_variable" "project_id" {
 
 # Generate a new GCP Service Account key
 data "vault_generic_secret" "gcp_credentials" {
-  path = "gcp/roleset/foo-dev-owner/key"
+  path = "gcp/roleset/${var.name}-${var.environment}-owner/key"
 }
 
 resource "tfe_variable" "gcp_credentials" {
@@ -36,7 +37,7 @@ resource "tfe_variable" "gcp_credentials" {
   key          = "GOOGLE_CREDENTIALS"
   category     = "env"
   value        = replace(base64decode(data.vault_generic_secret.gcp_credentials.data["private_key_data"]), "\n", "")
-  sensitive = true
+  sensitive    = true
 }
 
 #####################################################

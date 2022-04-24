@@ -8,6 +8,10 @@ variable "name" {
   type        = string
 }
 
+variable "environment" {
+  description = "The type of environment e.g. DEV, UAT"
+  type        = string
+}
 
 variable "gcp_billing_account" {
   description = "The GCP billing account to charge to"
