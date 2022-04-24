@@ -31,3 +31,12 @@ vault write gcp/roleset/foo-dev-owner \
       }
 EOF
 
+vault write gcp/roleset/foo-int-owner \
+    project="foo-int-348219" \
+    secret_type="service_account_key"  \
+    bindings=-<<EOF
+      resource "//cloudresourcemanager.googleapis.com/projects/foo-int-348219" {
+        roles = ["roles/owner"]
+      }
+EOF
+

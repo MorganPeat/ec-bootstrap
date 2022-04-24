@@ -38,6 +38,18 @@ module "dev" {
   tfc_readers = [tfe_team.foo_developers.id]
 }
 
+module "int" {
+  source = "./modules/environment-factory"
 
-# foo-int-348219
+  project_id          = "foo-int-348219"
+  name                = "foo"
+  environment         = "int"
+  gcp_billing_account = var.gcp_billing_account
+  tfc_organization    = var.tfc_organization
+
+  tfc_writers = []
+  tfc_readers = [tfe_team.foo_admins.id, tfe_team.foo_developers.id]
+}
+
+
 # foo-prod-348219
