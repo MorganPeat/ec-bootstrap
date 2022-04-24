@@ -101,3 +101,40 @@ resource "vault_terraform_cloud_secret_role" "reader" {
   name         = "${tfe_workspace.resources.name}-reader"
   team_id      = tfe_team.reader.id
 }
+
+
+
+
+#####################################################
+# Human access
+#
+# Grant read / write access to passed in user teams
+#####################################################
+
+resource "tfe_team_access" "human_readers" {
+  for_each     = toset(var.tfc_readers)
+  workspace_id = tfe_workspace.resources.id
+  team_id      = each.key
+
+  permissions {
+    runs              = "plan"
+    variables         = "read"
+    state_versions    = "read-outputs"
+    sentinel_mocks    = "none"
+    workspace_locking = false
+  }
+}
+
+resource "tfe_team_access" "human_writers" {
+  for_each     = toset(var.tfc_writers)
+  workspace_id = tfe_workspace.resources.id
+  team_id      = each.key
+
+  permissions {
+    runs              = "apply"
+    variables         = "read"
+    state_versions    = "read-outputs"
+    sentinel_mocks    = "none"
+    workspace_locking = false
+  }
+}

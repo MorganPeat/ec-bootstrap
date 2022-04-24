@@ -10,16 +10,17 @@ vault audit enable file file_path=stdout log_raw=true
 vault secrets enable -version=1 kv
 
 # Credentials needed to set up each environment
+# This is fugly, but hey - it's a demo :)
 vault kv put kv/bootstrap vault_token=<vault token> tfe_token=<your user tf api token>
 
-
-# GCP service accounts
-vault secrets enable gcp
 
 # Manage TFC team API tokens
 vault secrets enable terraform
 vault write terraform/config token=<your user tf api token>
 
+
+# GCP service accounts
+vault secrets enable gcp
 
 # Create a GCP Roleset for each project so creds can be read from vault
 vault write gcp/roleset/foo-dev-owner \
