@@ -38,7 +38,7 @@ Sets up a tiny dev instance of Vault - anything more is outside the scope of thi
    * `vault status`
 1. Configure vault
    *1.* Run `configure-vault.sh`
-1. Set GCP credentials (ADCs)
+1. Set GCP credentials (ADCs) in the vault vm
   * `gcloud auth application-default login`
 
 ## Set up the bootstrap TFC workspace
